@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:insta_ui_design/widgets/post_grid.dart';
+import 'package:insta_ui_design/widgets/story_widget.dart';
 import '../constant/constant.dart';
 
-enum FilterOption { Home, Search, Video, Shop, Profile }
+enum FilterOption { Home, Search, Add, Favorite, Profile }
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,29 +20,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
-        title: const Text(
-          'Instagram',
-          style: TextStyle(fontFamily: 'Cookie', color: black, fontSize: 40),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.photo_camera_outlined,
+            color: black,
+            size: 30,
+          ),
         ),
+        title: const Text('Instagram',
+            style: TextStyle(fontFamily: 'Cookie', color: black, fontSize: 40)),
         backgroundColor: white,
-        elevation: 0,
+        elevation: 1,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add_box_outlined,
-              color: black,
-              size: 30,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite_border_outlined,
-              color: black,
-              size: 30,
-            ),
-          ),
           Transform.translate(
             offset: const Offset(0, -3),
             child: Transform.rotate(
@@ -57,45 +49,15 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Column(
+      body: ListView(
         children: [
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(width: 2, color: Colors.red),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: FractionallySizedBox(
-                          heightFactor: 0.9,
-                          widthFactor: 0.9,
-                          child: Container(
-                            child: Image.asset('./assets/images/profilepic.png',),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF229592),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          )
+          StorySection(),
+          const Divider(),
+          PostGrid(),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        elevation: 8,
+        elevation: 5,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Row(
@@ -130,26 +92,26 @@ class _HomePageState extends State<HomePage> {
               IconButton(
                 onPressed: () {
                   setState(() {
-                    selected = FilterOption.Video;
+                    selected = FilterOption.Add;
                   });
                 },
                 icon: Icon(
-                  selected == FilterOption.Video
-                      ? Icons.movie
-                      : Icons.movie_outlined,
+                  selected == FilterOption.Add
+                      ? Icons.add_box
+                      : Icons.add_box_outlined,
                   size: 35,
                 ),
               ),
               IconButton(
                 onPressed: () {
                   setState(() {
-                    selected = FilterOption.Shop;
+                    selected = FilterOption.Favorite;
                   });
                 },
                 icon: Icon(
-                  selected == FilterOption.Shop
-                      ? Icons.local_mall
-                      : Icons.local_mall_outlined,
+                  selected == FilterOption.Favorite
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined,
                   size: 35,
                 ),
               ),
@@ -173,3 +135,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
+
